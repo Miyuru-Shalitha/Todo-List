@@ -89,12 +89,13 @@ function nameOfFirstDayOfMonth(month, year) {
     return { dayIndex: dayIndex, day: days[dayIndex] };
 }
 
-console.log(nameOfFirstDayOfMonth(9, 2021));
+// console.log(nameOfFirstDayOfMonth(9, 2021));
 
 // dayIndex: (Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6)
 function displayDays(dayIndex) {
     const dayTiles = document.querySelectorAll(".calender-tile");
 
+    // Check wheather the dayIndex in valid or not.
     if (dayIndex === undefined || dayIndex < 0 || dayIndex > 6) {
         alert(
             `dayIndex: ${dayIndex} is out of range! It must be between 0 - 6 (including 0 and 6)`
@@ -102,21 +103,54 @@ function displayDays(dayIndex) {
         return;
     }
 
+    // // Find the dayTile which corresponds to the first day of the month.
     // dayTiles.forEach((dayTile) => {
     //     if (dayIndex == dayTile.dataset.dayIndex) {
     //         dayTile.style.backgroundColor = "black";
-    //         break;
+    //         return;
     //     }
     //     console.log("Hello");
     // });
 
-    for (let i = 0; i < dayTiles.length; i++) {
-        if (dayIndex == dayTiles[i].dataset.dayIndex) {
-            dayTiles[i].style.backgroundColor = "green";
-            break;
-        }
+    // // Find the dayTile which corresponds to the first day of the month.
+    // for (let i = 0; i < dayTiles.length; i++) {
+    //     if (dayIndex == dayTiles[i].dataset.dayIndex) {
+    //         dayTiles[i].style.backgroundColor = "green";
+    //         // console.log(dayTiles[i].dataset.dayIndex);
+
+    //         const numOfDaysOfMonth = numberOfDaysOfMonth(7, 2021);
+    //         // console.log(numOfDaysOfMonth);
+
+    //         for (
+    //             let j = dayTiles[i].dataset.dayIndex;
+    //             j < numOfDaysOfMonth;
+    //             j++
+    //         ) {
+    //             let k = parseInt(j);
+
+    //             if (k > 34) {
+    //                 k = k - 34;
+    //                 console.log(k);
+    //                 document.querySelector(
+    //                     `#day-tile${k}`
+    //                 ).textContent = `${1}`;
+    //             } else {
+    //                 console.log(k);
+    //             }
+    //         }
+
+    //         break;
+    //     }
+    // }
+
+    const numOfDaysOfMonth = numberOfDaysOfMonth(7, 2021);
+
+    for (let i = dayIndex; i < numOfDaysOfMonth + dayIndex; i++) {
+        // document.querySelector(`#day-tile${i}`).textContent = i - 5;
+        // console.log(i - 5);
+
+        console.log(i);
     }
 }
 
-displayDays(6);
-console.log("Hello, world!");
+displayDays(4);
