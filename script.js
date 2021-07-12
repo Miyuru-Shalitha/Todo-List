@@ -119,3 +119,4 @@ function displayDays(dayIndex) {
 }
 
 displayDays(6);
+console.log("Hello, world!");
