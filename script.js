@@ -82,7 +82,7 @@ function nameOfFirstDayOfMonth(month, year) {
     ];
 
     const d = new Date();
-    d.setFullYear(year, month - 1, 1); // January -> 0
+    d.setFullYear(year, month, 1); // January -> 0
 
     const dayIndex = d.getDay();
 
@@ -115,3 +115,13 @@ function displayDays(dayIndex) {
 }
 
 displayDays(0);
+
+function showCalender() {
+    const currentDate = new Date();
+
+    document.querySelector(
+        `#day-tile${currentDate.getDate() - 1}`
+    ).style.backgroundColor = "red";
+}
+
+showCalender();
