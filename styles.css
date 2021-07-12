@@ -63,6 +63,13 @@ body {
     background-color: rgb(255, 242, 185);
     border-radius: 10px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+}
+
+.calender-tile:not(.name-of-day):hover {
+    background-color: rgb(255, 250, 229);
 }
 
 /* .calender-tile:nth-child(5) {
@@ -71,9 +78,13 @@ body {
 
 .name-of-day {
     background-color: rgb(78, 255, 93);
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
     font-size: 28px;
+}
+
+.name-of-day:hover {
+    background-color: rgb(170, 255, 170);
 }
 
 .right-container {
