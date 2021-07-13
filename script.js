@@ -115,7 +115,17 @@ function displayDays(dayIndex) {
     }
 }
 
+function clearCalenderDayTiles() {
+    document
+        .querySelectorAll(".calender-tile:not(.name-of-day)")
+        .forEach((dayTile) => {
+            dayTile.textContent = "";
+        });
+}
+
 function showCalender(monthOffset) {
+    clearCalenderDayTiles();
+
     const currentDate = new Date();
 
     const date = currentDate.getDate();
@@ -162,8 +172,6 @@ function changeMonth(monthOffset) {
 
 ///////////////////////////////////////////////////
 
-showCalender(0);
-
 // setTimeout(() => {
 //     changeMonth(1);
 // }, 5000);
@@ -176,10 +184,15 @@ showCalender(0);
 //     console.log(this.dataset);
 // };
 
-// let a = 0;
-// document.querySelectorAll(".header > div").forEach((button) => {
-//     button.onclick = () => {
-//         a += parseInt(button.dataset.monthOffset);
-//         changeMonth(a);
-//     };
-// });
+function previousAndNextMonthButtons() {
+    let offset = 0;
+    document.querySelectorAll(".header > div").forEach((button) => {
+        button.onclick = () => {
+            offset += parseInt(button.dataset.monthOffset);
+            changeMonth(offset);
+        };
+    });
+}
+
+showCalender(0);
+previousAndNextMonthButtons();
