@@ -118,20 +118,23 @@ function displayDays(dayIndex) {
 function showCalender() {
     const currentDate = new Date();
 
+    const date = currentDate.getDate();
+    const month = currentDate.getMonth(); // January -> 0
+    const year = currentDate.getFullYear();
+
     // Display days in corresponding dayTiles.
-    displayDays(
-        firstDayOfMonth(currentDate.getMonth(), currentDate.getFullYear())
-            .dayIndex
-    );
+    displayDays(firstDayOfMonth(month, year).dayIndex);
 
     // Highlight current day.
     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
-        if (dayTile.dataset.day == currentDate.getDate()) {
+        if (dayTile.dataset.day == date) {
             dayTile.classList.add("current-day");
         }
     });
 
-    // console.log(currentDate.getDate());
+    document.querySelector(".header > span").textContent = `${date} / ${
+        month + 1
+    } / ${year}`;
 }
 
 showCalender();
