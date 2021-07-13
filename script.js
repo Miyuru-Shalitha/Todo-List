@@ -15,6 +15,10 @@
 
 const currentDate = new Date();
 
+let headerSpan;
+let selectedDate;
+let selectedYear;
+
 function numberOfDaysOfMonth(month, year) {
     // Check whether "month" is a valid month or not.
     if (month > 12) {
@@ -193,9 +197,9 @@ function previousAndNextMonthButtons() {
 
 // Add onclick listeners to each dayTile.
 function selectDayTile() {
-    let headerSpan;
-    let selectedDate;
-    let selectedYear;
+    // let headerSpan;
+    // let selectedDate;
+    // let selectedYear;
 
     document
         .querySelectorAll(".calender-tile:not(.name-of-day)")
@@ -211,25 +215,81 @@ function selectDayTile() {
         });
 }
 
+const todoList = [
+    { time: 1, todo: "Hello, galaxy!" },
+    { time: 2, todo: "Hello, world!" },
+];
+
+// "Add" button functionality.
+function addTask() {
+    document.querySelector(".create-task > div").onclick = () => {
+        let input = document.querySelector(".create-task > input");
+
+        todoList.push({ time: new Date().getTime(), todo: input.value });
+
+        input.value = "";
+
+        showTodo(selectedDate, selectedMonth, selectedYear);
+    };
+}
+
 function showTodo(selectedDate, selectedMonth, selectedYear) {
+    document.querySelector(".todo-list").innerHTML = null;
+
     console.log(selectedDate, selectedMonth, selectedYear);
 
-    const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
-    const todoItem = JSON.stringify({
-        time: new Date().getTime(),
-        todo: "Hello, world!",
-    });
+    // const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
+    // const todoItem = JSON.stringify(todoList);
 
-    // localStorage.setItem(todoItemKey, todoItem);
+    // console.log(localStorage.getItem(todoItemKey));
 
-    setTimeout(() => {
-        console.log(localStorage.getItem(todoItemKey));
-    }, 5000);
+    // // localStorage.setItem(todoItemKey, todoItem);
 
     // setTimeout(() => {
-    //     localStorage.removeItem(todoItemKey);
-    //     console.log("Todo removed!");
-    // }, 10000);
+    //     console.log(localStorage.getItem(todoItemKey));
+    // }, 5000);
+
+    // // setTimeout(() => {
+    // //     localStorage.removeItem(todoItemKey);
+    // //     console.log("Todo removed!");
+    // // }, 10000);
+
+    todoList.forEach((listItem) => {
+        addListTile(listItem);
+    });
+}
+
+function addListTile(listItem) {
+    // document.querySelector(".todo-list").innerHTML = `
+    // <div class="list-tile">
+    //     <input type="checkbox">
+    //     <span>Hello, world!</span>
+    //     <div class="button edit">Edit</div>
+    //     <div class="button delete">Delete</div>
+    // </div>`;
+
+    const listTile = document.createElement("div");
+    listTile.className = "list-tile";
+
+    const inputCheckbox = document.createElement("input");
+    inputCheckbox.type = "checkbox";
+
+    const span = document.createElement("span");
+    span.innerText = listItem.todo;
+
+    const editButton = document.createElement("div");
+    editButton.className = "button edit";
+    editButton.textContent = "Edit";
+
+    const deleteButton = document.createElement("div");
+    deleteButton.className = "button delete";
+    deleteButton.textContent = "Delete";
+
+    document.querySelector(".todo-list").appendChild(listTile);
+    listTile.appendChild(inputCheckbox);
+    listTile.appendChild(span);
+    listTile.appendChild(editButton);
+    listTile.appendChild(deleteButton);
 }
 
 showCalender(
@@ -239,6 +299,7 @@ showCalender(
 );
 previousAndNextMonthButtons();
 selectDayTile();
+addTask();
 
 // localStorage.setItem("name", "Paradox");
 // console.log(localStorage.getItem("name"));
