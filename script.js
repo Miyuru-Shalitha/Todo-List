@@ -70,7 +70,7 @@ function checkLeapYear(year) {
 // Return the name of the first day of the month.
 // Example: (2021 -> July   -> 1 -> Thursday)
 // Example: (2021 -> August -> 1 -> Sunday)
-function nameOfFirstDayOfMonth(month, year) {
+function firstDayOfMonth(month, year) {
     const days = [
         "Sunday",
         "Monday",
@@ -88,8 +88,6 @@ function nameOfFirstDayOfMonth(month, year) {
 
     return { dayIndex: dayIndex, day: days[dayIndex] };
 }
-
-// console.log(nameOfFirstDayOfMonth(9, 2021));
 
 // dayIndex: (Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6)
 function displayDays(dayIndex) {
@@ -114,14 +112,20 @@ function displayDays(dayIndex) {
     }
 }
 
-displayDays(0);
-
 function showCalender() {
     const currentDate = new Date();
 
-    document.querySelector(
-        `#day-tile${currentDate.getDate() - 1}`
-    ).style.backgroundColor = "red";
+    // Display days in corresponding dayTiles.
+    displayDays(
+        firstDayOfMonth(currentDate.getMonth(), currentDate.getFullYear())
+            .dayIndex
+    );
+
+    // document.querySelector(
+    //     `#day-tile${currentDate.getDate() - 1}`
+    // ).style.backgroundColor = "red";
+
+    console.log(currentDate.getDate());
 }
 
 showCalender();
