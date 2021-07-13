@@ -130,16 +130,18 @@ function clearCalenderDayTiles() {
         });
 }
 
-function showCalender(monthOffset, yearOffset) {
+function showCalender(date, month, year) {
+    month -= 1; // January -> 0
+
     clearCalenderDayTiles();
 
-    console.log(monthOffset, yearOffset);
+    // console.log(monthOffset, yearOffset);
 
     // const currentDate = new Date();
 
-    const date = currentDate.getDate();
-    let month = currentDate.getMonth() + monthOffset; // January -> 0
-    let year = currentDate.getFullYear() + yearOffset;
+    // const date = currentDate.getDate();
+    // let month = currentDate.getMonth() + monthOffset; // January -> 0
+    // let year = currentDate.getFullYear() + yearOffset;
 
     // if (month > 11) {
     //     month = month - 12;
@@ -166,7 +168,7 @@ function showCalender(monthOffset, yearOffset) {
     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
         const dayTileClassList = dayTile.classList;
 
-        if (monthOffset === 0 && dayTile.dataset.day == date) {
+        if (month === currentDate.getMonth() && dayTile.dataset.day == date) {
             // Highlight current day.
             dayTileClassList.add("current-day");
         } else if (dayTileClassList.contains("current-day")) {
@@ -198,21 +200,27 @@ function showCalender(monthOffset, yearOffset) {
 // };
 
 function previousAndNextMonthButtons() {
-    let offset = 0;
+    const date = currentDate.getDate();
+    let month = currentDate.getMonth(); // January -> 0
+    let year = currentDate.getFullYear();
 
     document.querySelectorAll(".header > div").forEach((button) => {
         button.onclick = () => {
-            offset += parseInt(button.dataset.monthOffset);
+            month += parseInt(button.dataset.monthOffset);
 
-            if (currentDate.getMonth() + offset > 11) {
-                offset = 0;
+            if (month > 12) {
+                month = 0;
+                year += 1;
+            } else if (month < 1) {
+                month = 12;
+                year -= 1;
             }
 
-            showCalender(offset, 0);
+            showCalender(date, month, year);
             // changeMonth(offset, 0);
         };
     });
 }
 
-showCalender(0, 0);
+showCalender(13, 7, 2021);
 previousAndNextMonthButtons();
