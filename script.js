@@ -164,10 +164,22 @@ function changeMonth(monthOffset) {
 
 showCalender(0);
 
-setTimeout(() => {
-    changeMonth(1);
-}, 5000);
+// setTimeout(() => {
+//     changeMonth(1);
+// }, 5000);
 
-setTimeout(() => {
-    changeMonth(0);
-}, 10000);
+// setTimeout(() => {
+//     changeMonth(0);
+// }, 10000);
+
+// document.querySelector(".header > div").onclick = () => {
+//     console.log(this.dataset);
+// };
+
+// let a = 0;
+// document.querySelectorAll(".header > div").forEach((button) => {
+//     button.onclick = () => {
+//         a += parseInt(button.dataset.monthOffset);
+//         changeMonth(a);
+//     };
+// });
