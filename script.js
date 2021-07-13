@@ -96,7 +96,7 @@ function firstDayOfMonth(month, year) {
 function displayDays(dayIndex) {
     const dayTiles = document.querySelectorAll(".calender-tile");
 
-    // Check whether the dayIndex in valid or not.
+    // Check whether the dayIndex is valid or not.
     if (dayIndex === undefined || dayIndex < 0 || dayIndex > 6) {
         alert(
             `dayIndex: ${dayIndex} is out of range! It must be between 0 - 6 (including 0 and 6)`
@@ -123,6 +123,7 @@ function clearCalenderDayTiles() {
         .querySelectorAll(".calender-tile:not(.name-of-day)")
         .forEach((dayTile) => {
             dayTile.textContent = "";
+            dayTile.removeAttribute("data-day");
         });
 }
 
@@ -145,9 +146,11 @@ function showCalender(date, month, year) {
         }
     });
 
-    document.querySelector(".header > span").textContent = `${
-        month + 1
-    } / ${year}`;
+    // Set values for span in header div.
+    const headerSpan = document.querySelector(".header > span");
+    headerSpan.textContent = `${month + 1} / ${year}`;
+    headerSpan.setAttribute("data-month", month + 1);
+    headerSpan.setAttribute("data-year", year);
 }
 
 function previousAndNextMonthButtons() {
@@ -168,10 +171,25 @@ function previousAndNextMonthButtons() {
             }
 
             showCalender(date, month, year);
-            // changeMonth(offset, 0);
         };
     });
 }
 
+function showTodoList() {
+    document
+        .querySelectorAll(".calender-tile:not(.name-of-day)")
+        .forEach((dayTile) => {
+            dayTile.onclick = () => {
+                const headerSpan = document.querySelector(".header > span");
+                const selectedDate = dayTile.dataset.day;
+                const selectedMonth = headerSpan.dataset.month;
+                const selectedYear = headerSpan.dataset.year;
+
+                console.log(selectedDate, selectedMonth, selectedYear);
+            };
+        });
+}
+
 showCalender(13, 7, 2021);
 previousAndNextMonthButtons();
+showTodoList();
