@@ -13,9 +13,11 @@
 // 11 -> 30
 // 12 -> 31
 
-let year = 4000;
-let month = 7;
-let day = 12;
+// let year = 4000;
+// let month = 7;
+// let day = 12;
+
+const currentDate = new Date();
 
 function numberOfDaysOfMonth(month, year) {
     // Check whether "month" is a valid month or not.
@@ -71,6 +73,11 @@ function checkLeapYear(year) {
 // Example: (2021 -> July   -> 1 -> Thursday)
 // Example: (2021 -> August -> 1 -> Sunday)
 function firstDayOfMonth(month, year) {
+    // Check whether the month is valid or not.
+    if (month > 11) {
+        alert(`Month ${month} is out of range. (January -> 0)`);
+    }
+
     const days = [
         "Sunday",
         "Monday",
@@ -123,14 +130,20 @@ function clearCalenderDayTiles() {
         });
 }
 
-function showCalender(monthOffset) {
+function showCalender(monthOffset, yearOffset) {
     clearCalenderDayTiles();
 
-    const currentDate = new Date();
+    console.log(monthOffset, yearOffset);
+
+    // const currentDate = new Date();
 
     const date = currentDate.getDate();
-    const month = currentDate.getMonth() + monthOffset; // January -> 0
-    const year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + monthOffset; // January -> 0
+    let year = currentDate.getFullYear() + yearOffset;
+
+    // if (month > 11) {
+    //     month = month - 12;
+    // }
 
     // Display days in corresponding dayTiles.
     displayDays(firstDayOfMonth(month, year).dayIndex);
@@ -166,9 +179,9 @@ function showCalender(monthOffset) {
     } / ${year}`;
 }
 
-function changeMonth(monthOffset) {
-    showCalender(monthOffset);
-}
+// function changeMonth(monthOffset, yearOffset) {
+//     showCalender(monthOffset, yearOffset);
+// }
 
 ///////////////////////////////////////////////////
 
@@ -186,13 +199,20 @@ function changeMonth(monthOffset) {
 
 function previousAndNextMonthButtons() {
     let offset = 0;
+
     document.querySelectorAll(".header > div").forEach((button) => {
         button.onclick = () => {
             offset += parseInt(button.dataset.monthOffset);
-            changeMonth(offset);
+
+            if (currentDate.getMonth() + offset > 11) {
+                offset = 0;
+            }
+
+            showCalender(offset, 0);
+            // changeMonth(offset, 0);
         };
     });
 }
 
-showCalender(0);
+showCalender(0, 0);
 previousAndNextMonthButtons();
