@@ -34,14 +34,42 @@ body {
     background-color: rgb(189, 189, 189);
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 20px 0;
+    justify-content: space-between;
+    padding: 20px;
     margin: 20px;
     border-radius: 10px;
 }
 
+.header > div {
+    font-size: 25px;
+    /* background-color: white; */
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.header div:first-of-type {
+    color: rgb(2, 175, 2);
+    border: 1px solid green;
+}
+
+.header div:first-of-type:hover {
+    background-color: rgb(78, 255, 93);
+    color: green;
+}
+
 .header > span {
     font-size: 40px;
+}
+
+.header div:last-of-type {
+    color: blue;
+    border: 1px solid blue;
+}
+
+.header div:last-of-type:hover {
+    background-color: rgb(100, 100, 255);
+    color: rgb(0, 0, 105);
 }
 
 .content {

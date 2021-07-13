@@ -115,20 +115,39 @@ function displayDays(dayIndex) {
     }
 }
 
-function showCalender() {
+function showCalender(monthOffset) {
     const currentDate = new Date();
 
     const date = currentDate.getDate();
-    const month = currentDate.getMonth(); // January -> 0
+    const month = currentDate.getMonth() + monthOffset; // January -> 0
     const year = currentDate.getFullYear();
 
     // Display days in corresponding dayTiles.
     displayDays(firstDayOfMonth(month, year).dayIndex);
 
-    // Highlight current day.
+    // if (monthOffset === 0) {
+    //     // Highlight current day.
+    //     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
+    //         if (dayTile.dataset.day == date) {
+    //             dayTile.classList.add("current-day");
+    //         }
+    //     });
+    // } else {
+    //     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
+    //         if (dayTile.classList.contains("current-day")) {
+    //             dayTile.classList.remove("current-day");
+    //         }
+    //     });
+    // }
+
     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
-        if (dayTile.dataset.day == date) {
-            dayTile.classList.add("current-day");
+        const dayTileClassList = dayTile.classList;
+
+        if (monthOffset === 0 && dayTile.dataset.day == date) {
+            // Highlight current day.
+            dayTileClassList.add("current-day");
+        } else if (dayTileClassList.contains("current-day")) {
+            dayTileClassList.remove("current-day");
         }
     });
 
@@ -137,4 +156,18 @@ function showCalender() {
     } / ${year}`;
 }
 
-showCalender();
+function changeMonth(monthOffset) {
+    showCalender(monthOffset);
+}
+
+///////////////////////////////////////////////////
+
+showCalender(0);
+
+setTimeout(() => {
+    changeMonth(1);
+}, 5000);
+
+setTimeout(() => {
+    changeMonth(0);
+}, 10000);
