@@ -93,7 +93,7 @@ function firstDayOfMonth(month, year) {
 function displayDays(dayIndex) {
     const dayTiles = document.querySelectorAll(".calender-tile");
 
-    // Check wheather the dayIndex in valid or not.
+    // Check whether the dayIndex in valid or not.
     if (dayIndex === undefined || dayIndex < 0 || dayIndex > 6) {
         alert(
             `dayIndex: ${dayIndex} is out of range! It must be between 0 - 6 (including 0 and 6)`
@@ -104,6 +104,9 @@ function displayDays(dayIndex) {
     // Set corresponding day for dayTile.
     for (let i = 1; i <= numberOfDaysOfMonth(7, 2021); i++) {
         document.querySelector(`#day-tile${dayIndex}`).textContent = i;
+        document
+            .querySelector(`#day-tile${dayIndex}`)
+            .setAttribute("data-day", i);
         dayIndex++;
 
         if (dayIndex > 34) {
@@ -121,11 +124,14 @@ function showCalender() {
             .dayIndex
     );
 
-    // document.querySelector(
-    //     `#day-tile${currentDate.getDate() - 1}`
-    // ).style.backgroundColor = "red";
+    // Show current date.
+    document.querySelectorAll(".calender-tile").forEach((dayTile) => {
+        if (dayTile.dataset.day == currentDate.getDate()) {
+            dayTile.style.backgroundColor = "red";
+        }
+    });
 
-    console.log(currentDate.getDate());
+    // console.log(currentDate.getDate());
 }
 
 showCalender();
