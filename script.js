@@ -1,4 +1,4 @@
-// 2021 -> July -> 12 -> Monday // The day this was scripted.
+// 2021 -> July -> 11, 12, 13 -> Sunday, Monday, Tuesday // The days this was scripted.
 
 // 1  -> 31
 // 2  -> 28 / 29
@@ -63,8 +63,6 @@ function checkLeapYear(year) {
     }
 }
 
-// console.log(numberOfDaysOfMonth(7, 2021));
-
 // Return the name of the first day of the month.
 // Example: (2021 -> July   -> 1 -> Thursday)
 // Example: (2021 -> August -> 1 -> Sunday)
@@ -84,10 +82,10 @@ function firstDayOfMonth(month, year) {
         "Saturday",
     ];
 
-    const d = new Date();
-    d.setFullYear(year, month, 1); // January -> 0
+    const date = new Date();
+    date.setFullYear(year, month, 1); // January -> 0
 
-    const dayIndex = d.getDay();
+    const dayIndex = date.getDay();
 
     return { dayIndex: dayIndex, day: days[dayIndex] };
 }
@@ -175,21 +173,74 @@ function previousAndNextMonthButtons() {
     });
 }
 
-function showTodoList() {
+// function addTodo(selectedDate, selectedMonth, selectedYear) {
+//     const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
+//     const todoItem = JSON.stringify({
+//         time: new Date().getTime(),
+//         todo: "Hello, world!",
+//     });
+
+//     localStorage.setItem(todoItemKey, todoItem);
+
+//     setTimeout(() => {
+//         console.log(localStorage.getItem(todoItemKey));
+//     }, 5000);
+
+//     setTimeout(() => {
+//         localStorage.removeItem(todoItemKey);
+//     }, 10000);
+// }
+
+// Add onclick listeners to each dayTile.
+function selectDayTile() {
+    let headerSpan;
+    let selectedDate;
+    let selectedYear;
+
     document
         .querySelectorAll(".calender-tile:not(.name-of-day)")
         .forEach((dayTile) => {
             dayTile.onclick = () => {
-                const headerSpan = document.querySelector(".header > span");
-                const selectedDate = dayTile.dataset.day;
-                const selectedMonth = headerSpan.dataset.month;
-                const selectedYear = headerSpan.dataset.year;
+                headerSpan = document.querySelector(".header > span");
+                selectedDate = parseInt(dayTile.dataset.day);
+                selectedMonth = parseInt(headerSpan.dataset.month);
+                selectedYear = parseInt(headerSpan.dataset.year);
 
-                console.log(selectedDate, selectedMonth, selectedYear);
+                showTodo(selectedDate, selectedMonth, selectedYear);
             };
         });
 }
 
-showCalender(13, 7, 2021);
+function showTodo(selectedDate, selectedMonth, selectedYear) {
+    console.log(selectedDate, selectedMonth, selectedYear);
+
+    const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
+    const todoItem = JSON.stringify({
+        time: new Date().getTime(),
+        todo: "Hello, world!",
+    });
+
+    // localStorage.setItem(todoItemKey, todoItem);
+
+    setTimeout(() => {
+        console.log(localStorage.getItem(todoItemKey));
+    }, 5000);
+
+    // setTimeout(() => {
+    //     localStorage.removeItem(todoItemKey);
+    //     console.log("Todo removed!");
+    // }, 10000);
+}
+
+showCalender(
+    currentDate.getDate(),
+    currentDate.getMonth() + 1,
+    currentDate.getFullYear()
+);
 previousAndNextMonthButtons();
-showTodoList();
+selectDayTile();
+
+// localStorage.setItem("name", "Paradox");
+// console.log(localStorage.getItem("name"));
+// localStorage.removeItem("name");
+// console.log(localStorage.getItem("name"));
