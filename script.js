@@ -161,7 +161,7 @@ function previousAndNextMonthButtons() {
             month += parseInt(button.dataset.monthOffset);
 
             if (month > 12) {
-                month = 0;
+                month = 1;
                 year += 1;
             } else if (month < 1) {
                 month = 12;
