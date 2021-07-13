@@ -124,10 +124,10 @@ function showCalender() {
             .dayIndex
     );
 
-    // Show current date.
+    // Highlight current day.
     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
         if (dayTile.dataset.day == currentDate.getDate()) {
-            dayTile.style.backgroundColor = "red";
+            dayTile.classList.add("current-day");
         }
     });
 
