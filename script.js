@@ -13,10 +13,6 @@
 // 11 -> 30
 // 12 -> 31
 
-// let year = 4000;
-// let month = 7;
-// let day = 12;
-
 const currentDate = new Date();
 
 function numberOfDaysOfMonth(month, year) {
@@ -135,35 +131,8 @@ function showCalender(date, month, year) {
 
     clearCalenderDayTiles();
 
-    // console.log(monthOffset, yearOffset);
-
-    // const currentDate = new Date();
-
-    // const date = currentDate.getDate();
-    // let month = currentDate.getMonth() + monthOffset; // January -> 0
-    // let year = currentDate.getFullYear() + yearOffset;
-
-    // if (month > 11) {
-    //     month = month - 12;
-    // }
-
     // Display days in corresponding dayTiles.
     displayDays(firstDayOfMonth(month, year).dayIndex);
-
-    // if (monthOffset === 0) {
-    //     // Highlight current day.
-    //     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
-    //         if (dayTile.dataset.day == date) {
-    //             dayTile.classList.add("current-day");
-    //         }
-    //     });
-    // } else {
-    //     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
-    //         if (dayTile.classList.contains("current-day")) {
-    //             dayTile.classList.remove("current-day");
-    //         }
-    //     });
-    // }
 
     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
         const dayTileClassList = dayTile.classList;
@@ -176,28 +145,10 @@ function showCalender(date, month, year) {
         }
     });
 
-    document.querySelector(".header > span").textContent = `${date} / ${
+    document.querySelector(".header > span").textContent = `${
         month + 1
     } / ${year}`;
 }
-
-// function changeMonth(monthOffset, yearOffset) {
-//     showCalender(monthOffset, yearOffset);
-// }
-
-///////////////////////////////////////////////////
-
-// setTimeout(() => {
-//     changeMonth(1);
-// }, 5000);
-
-// setTimeout(() => {
-//     changeMonth(0);
-// }, 10000);
-
-// document.querySelector(".header > div").onclick = () => {
-//     console.log(this.dataset);
-// };
 
 function previousAndNextMonthButtons() {
     const date = currentDate.getDate();
