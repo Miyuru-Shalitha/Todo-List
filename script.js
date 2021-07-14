@@ -307,11 +307,22 @@ function addListTile(listItem) {
 
         document.querySelector(".edit-task").onsubmit = (event) => {
             event.preventDefault();
-            editTodoFromStorage(
-                storageKey,
-                storageTodoId,
-                event.target[0].value
-            );
+
+            const newTodo = event.target[0].value;
+
+            editTodoFromStorage(storageKey, storageTodoId, newTodo)
+                .then(() => {
+                    console.log("Yoo");
+                    listTile.innerHTML = `
+                        <input type="checkbox">
+                        <span>${newTodo}</span>
+                        <div class="button edit">Edit</div>
+                        <div class="button delete">Delete</div>
+                    `;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         };
     };
 }
@@ -342,6 +353,8 @@ function deleteTodoFromStorage(key, todoId) {
 function editTodoFromStorage(key, todoId, newTodo) {
     console.log(key, todoId, newTodo);
 
+    let editSuccess = false;
+
     const storedTodo = JSON.parse(localStorage.getItem(key));
     for (let i = 0; i < storedTodo.length; i++) {
         if (storedTodo[i].id == todoId) {
@@ -351,16 +364,19 @@ function editTodoFromStorage(key, todoId, newTodo) {
             const updatedTodoListJSON = JSON.stringify(storedTodo);
             localStorage.setItem(key, updatedTodoListJSON);
 
+            editSuccess = true;
+
             break;
         }
     }
 
-    // listTile.innerHTML = `
-    //     <input type="checkbox">
-    //     <span>Hello, world!</span>
-    //     <div class="button edit">Edit</div>
-    //     <div class="button delete">Delete</div>
-    // `;
+    return new Promise((resolve, reject) => {
+        if (editSuccess) {
+            resolve("Success");
+        } else {
+            reject("Falid");
+        }
+    });
 }
 
 showCalender(
