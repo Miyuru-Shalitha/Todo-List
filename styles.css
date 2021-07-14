@@ -101,6 +101,18 @@ body {
     background-color: rgb(255, 250, 229);
 }
 
+.red-border-bottom {
+    border-bottom: 5px solid red;
+}
+
+.green-border-bottom {
+    border-bottom: 5px solid green;
+}
+
+.blue-border-bottom {
+    border-bottom: 5px solid blue;
+}
+
 /* .calender-tile:nth-child(5) {
     background-color: rgb(189, 189, 189);
 } */
