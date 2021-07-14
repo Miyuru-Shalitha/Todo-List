@@ -1,4 +1,4 @@
-// 2021 -> July -> 11, 12, 13 -> Sunday, Monday, Tuesday // The days this was scripted.
+// 2021 -> July -> 11, 12, 13, 14 -> Sunday, Monday, Tuesday, Wednesday // The days this was scripted.
 
 // 1  -> 31
 // 2  -> 28 / 29
@@ -17,6 +17,7 @@ const currentDate = new Date();
 
 let headerSpan;
 let selectedDate;
+let selectedMonth;
 let selectedYear;
 
 function numberOfDaysOfMonth(month, year) {
@@ -177,30 +178,8 @@ function previousAndNextMonthButtons() {
     });
 }
 
-// function addTodo(selectedDate, selectedMonth, selectedYear) {
-//     const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
-//     const todoItem = JSON.stringify({
-//         time: new Date().getTime(),
-//         todo: "Hello, world!",
-//     });
-
-//     localStorage.setItem(todoItemKey, todoItem);
-
-//     setTimeout(() => {
-//         console.log(localStorage.getItem(todoItemKey));
-//     }, 5000);
-
-//     setTimeout(() => {
-//         localStorage.removeItem(todoItemKey);
-//     }, 10000);
-// }
-
 // Add onclick listeners to each dayTile.
 function selectDayTile() {
-    // let headerSpan;
-    // let selectedDate;
-    // let selectedYear;
-
     document
         .querySelectorAll(".calender-tile:not(.name-of-day)")
         .forEach((dayTile) => {
@@ -210,53 +189,64 @@ function selectDayTile() {
                 selectedMonth = parseInt(headerSpan.dataset.month);
                 selectedYear = parseInt(headerSpan.dataset.year);
 
-                showTodo(selectedDate, selectedMonth, selectedYear);
+                showTodo();
             };
         });
 }
-
-const todoList = [
-    { time: 1, todo: "Hello, galaxy!" },
-    { time: 2, todo: "Hello, world!" },
-];
 
 // "Add" button functionality.
 function addTask() {
     document.querySelector(".create-task > div").onclick = () => {
         let input = document.querySelector(".create-task > input");
 
-        todoList.push({ time: new Date().getTime(), todo: input.value });
+        // todoList.push({ time: new Date().getTime(), todo: input.value });
+        const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
+        // const todoItem = JSON.stringify(tempTodoList);
+
+        const storedTodoListJSON = localStorage.getItem(todoItemKey);
+        let newTodoList;
+
+        if (storedTodoListJSON) {
+            const tempTodoList = JSON.parse(storedTodoListJSON);
+            tempTodoList.push({
+                time: new Date().getTime(),
+                todo: input.value,
+            });
+
+            newTodoList = JSON.stringify(tempTodoList);
+        } else {
+            newTodoList = JSON.stringify([
+                {
+                    time: new Date().getTime(),
+                    todo: input.value,
+                },
+            ]);
+        }
+
+        localStorage.setItem(todoItemKey, newTodoList);
 
         input.value = "";
 
-        showTodo(selectedDate, selectedMonth, selectedYear);
+        showTodo();
     };
 }
 
-function showTodo(selectedDate, selectedMonth, selectedYear) {
+function showTodo() {
     document.querySelector(".todo-list").innerHTML = null;
 
-    console.log(selectedDate, selectedMonth, selectedYear);
+    const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
 
-    // const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
-    // const todoItem = JSON.stringify(todoList);
+    const storedTodoList = localStorage.getItem(todoItemKey);
 
-    // console.log(localStorage.getItem(todoItemKey));
+    if (storedTodoList) {
+        const todoList = JSON.parse(localStorage.getItem(todoItemKey));
 
-    // // localStorage.setItem(todoItemKey, todoItem);
-
-    // setTimeout(() => {
-    //     console.log(localStorage.getItem(todoItemKey));
-    // }, 5000);
-
-    // // setTimeout(() => {
-    // //     localStorage.removeItem(todoItemKey);
-    // //     console.log("Todo removed!");
-    // // }, 10000);
-
-    todoList.forEach((listItem) => {
-        addListTile(listItem);
-    });
+        todoList.forEach((listItem) => {
+            addListTile(listItem);
+        });
+    } else {
+        console.log("No todos!"); //////////////////////NO TODOS//////////////////////
+    }
 }
 
 function addListTile(listItem) {
