@@ -298,14 +298,21 @@ function addListTile(listItem) {
     };
 
     editButton.onclick = () => {
-        editTodoFromStorage(storageKey, storageTodoId);
-
         listTile.innerHTML = `
             <form class="edit-task">
                 <input type="text" value="${listItem.todo}" placeholder="Edit task">
                 <input type="submit" value="Save">
             </form>
         `;
+
+        document.querySelector(".edit-task").onsubmit = (event) => {
+            event.preventDefault();
+            editTodoFromStorage(
+                storageKey,
+                storageTodoId,
+                event.target[0].value
+            );
+        };
     };
 }
 
@@ -332,8 +339,21 @@ function deleteTodoFromStorage(key, todoId) {
     // showTodo();
 }
 
-function editTodoFromStorage() {
-    console.log("Edit button is clicked.");
+function editTodoFromStorage(key, todoId, newTodo) {
+    console.log(key, todoId, newTodo);
+
+    const storedTodo = JSON.parse(localStorage.getItem(key));
+    for (let i = 0; i < storedTodo.length; i++) {
+        if (storedTodo[i].id == todoId) {
+            storedTodo[i].todo = newTodo;
+            storedTodo[i].time = new Date().getTime();
+
+            const updatedTodoListJSON = JSON.stringify(storedTodo);
+            localStorage.setItem(key, updatedTodoListJSON);
+
+            break;
+        }
+    }
 }
 
 showCalender(
