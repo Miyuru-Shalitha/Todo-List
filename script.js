@@ -163,24 +163,26 @@ function showCalender(date, month, year) {
 
 function previousAndNextMonthButtons() {
     const date = currentDate.getDate();
-    let month = currentDate.getMonth(); // January -> 0
-    let year = currentDate.getFullYear();
-    // headerMonth = currentDate.getFullYear();
-    // headerYear = currentDate.getFullYear();
+    // let month = currentDate.getMonth(); // January -> 0
+    // let headerYear = currentDate.getFullYear();
+    headerMonth = currentDate.getMonth();
+    headerYear = currentDate.getFullYear();
+
+    showBottomBorders(headerMonth, headerYear);
 
     document.querySelectorAll(".header > div").forEach((button) => {
         button.onclick = () => {
-            month += parseInt(button.dataset.monthOffset);
+            headerMonth += parseInt(button.dataset.monthOffset);
 
-            if (month > 12) {
-                month = 1;
-                year += 1;
-            } else if (month < 1) {
-                month = 12;
-                year -= 1;
+            if (headerMonth > 12) {
+                headerMonth = 1;
+                headerYear += 1;
+            } else if (headerMonth < 1) {
+                headerMonth = 12;
+                headerYear -= 1;
             }
 
-            showCalender(date, month, year);
+            showCalender(date, headerMonth, headerYear);
         };
     });
 }
@@ -261,7 +263,7 @@ function showTodo() {
 }
 
 function addListTile(listItem) {
-    // showBottomBorders();
+    showBottomBorders(headerMonth, headerYear);
 
     let tempNewTodo; // Tempory value for edit form input.
 
@@ -298,6 +300,8 @@ function addListTile(listItem) {
         deleteTodoFromStorage(storageKey, storageTodoId);
 
         listTile.remove();
+
+        showBottomBorders(headerMonth, headerYear);
     };
 
     editButton.onclick = () => {
@@ -419,23 +423,20 @@ function showBottomBorders(month, year) {
             `${dayTile.dataset.day}/${month}/${year}`
         );
 
+        // Remove previous bottom border styles.
+        dayTile.classList.remove("red-border-bottom");
+        dayTile.classList.remove("green-border-bottom");
+        dayTile.classList.remove("blue-border-bottom");
+
         if (storedTodoListJSON) {
-            // console.log(storedTodoListJSON);
-            // dayTile.classList.add("blue-border-bottom");
             const storedTodoList = JSON.parse(storedTodoListJSON);
             const todoCount = storedTodoList.length;
 
             if (todoCount < 4) {
-                // dayTile.classList.remove("red-border-bottom");
-                // dayTile.classList.remove("green-border-bottom");
                 dayTile.classList.add("blue-border-bottom");
             } else if (todoCount < 7) {
-                // dayTile.classList.remove("red-border-bottom");
-                // dayTile.classList.remove("blue-border-bottom");
                 dayTile.classList.add("green-border-bottom");
             } else {
-                // dayTile.classList.remove("green-border-bottom");
-                // dayTile.classList.remove("blue-border-bottom");
                 dayTile.classList.add("red-border-bottom");
             }
         }
