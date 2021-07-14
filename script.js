@@ -1,4 +1,4 @@
-// 2021 -> July -> 11, 12, 13, 14 -> Sunday, Monday, Tuesday, Wednesday // The days this was scripted.
+// 2021 -> July -> 11, 12, 13, 14, 15 -> Sunday, Monday, Tuesday, Wednesday, Thursday // The days this was scripted.
 
 // 1  -> 31
 // 2  -> 28 / 29
@@ -19,6 +19,9 @@ let headerSpan;
 let selectedDate;
 let selectedMonth;
 let selectedYear;
+
+let headerMonth; // Month in header.
+let headerYear; // Year in header.
 
 function numberOfDaysOfMonth(month, year) {
     // Check whether "month" is a valid month or not.
@@ -154,12 +157,16 @@ function showCalender(date, month, year) {
     headerSpan.textContent = `${month + 1} / ${year}`;
     headerSpan.setAttribute("data-month", month + 1);
     headerSpan.setAttribute("data-year", year);
+
+    showBottomBorders(month, year);
 }
 
 function previousAndNextMonthButtons() {
     const date = currentDate.getDate();
     let month = currentDate.getMonth(); // January -> 0
     let year = currentDate.getFullYear();
+    // headerMonth = currentDate.getFullYear();
+    // headerYear = currentDate.getFullYear();
 
     document.querySelectorAll(".header > div").forEach((button) => {
         button.onclick = () => {
@@ -254,6 +261,8 @@ function showTodo() {
 }
 
 function addListTile(listItem) {
+    // showBottomBorders();
+
     let tempNewTodo; // Tempory value for edit form input.
 
     const listTile = document.createElement("div");
@@ -392,6 +401,47 @@ function editTodoFromStorage(key, todoId, newTodo) {
     });
 }
 
+// Add bottom borders corresponding to todo count.
+function showBottomBorders(month, year) {
+    month++;
+
+    const dayTiles = document.querySelectorAll(
+        ".calender-tile:not(.name-of-day)"
+    );
+
+    console.log(month, year);
+
+    dayTiles.forEach((dayTile) => {
+        // console.log(dayTile.dataset.day);
+        // dayTile.classList.add("blue-border-bottom");
+
+        const storedTodoListJSON = localStorage.getItem(
+            `${dayTile.dataset.day}/${month}/${year}`
+        );
+
+        if (storedTodoListJSON) {
+            // console.log(storedTodoListJSON);
+            // dayTile.classList.add("blue-border-bottom");
+            const storedTodoList = JSON.parse(storedTodoListJSON);
+            const todoCount = storedTodoList.length;
+
+            if (todoCount < 4) {
+                // dayTile.classList.remove("red-border-bottom");
+                // dayTile.classList.remove("green-border-bottom");
+                dayTile.classList.add("blue-border-bottom");
+            } else if (todoCount < 7) {
+                // dayTile.classList.remove("red-border-bottom");
+                // dayTile.classList.remove("blue-border-bottom");
+                dayTile.classList.add("green-border-bottom");
+            } else {
+                // dayTile.classList.remove("green-border-bottom");
+                // dayTile.classList.remove("blue-border-bottom");
+                dayTile.classList.add("red-border-bottom");
+            }
+        }
+    });
+}
+
 showCalender(
     currentDate.getDate(),
     currentDate.getMonth() + 1,
@@ -400,7 +450,6 @@ showCalender(
 previousAndNextMonthButtons();
 selectDayTile();
 addTask();
-
 // localStorage.setItem("name", "Paradox");
 // console.log(localStorage.getItem("name"));
 // localStorage.removeItem("name");
