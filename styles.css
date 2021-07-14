@@ -207,10 +207,10 @@ body {
     background-color: rgb(36, 218, 0);
     border: none;
     border-radius: 0 10px 10px 0;
-    display: flex;
-    justify-self: center;
-    align-items: center;
-    padding-left: 10px;
+    /* display: flex; */
+    /* justify-self: center; */
+    /* align-items: center; */
+    /* padding-left: 10px; */
     color: white;
     cursor: pointer;
 }
