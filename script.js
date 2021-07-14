@@ -354,6 +354,13 @@ function editTodoFromStorage(key, todoId, newTodo) {
             break;
         }
     }
+
+    // listTile.innerHTML = `
+    //     <input type="checkbox">
+    //     <span>Hello, world!</span>
+    //     <div class="button edit">Edit</div>
+    //     <div class="button delete">Delete</div>
+    // `;
 }
 
 showCalender(
