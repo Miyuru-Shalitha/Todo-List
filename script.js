@@ -196,7 +196,9 @@ function selectDayTile() {
 
 // "Add" button functionality.
 function addTask() {
-    document.querySelector(".create-task > div").onclick = () => {
+    document.querySelector(".create-task").onsubmit = (event) => {
+        event.preventDefault();
+
         let input = document.querySelector(".create-task > input");
 
         // todoList.push({ time: new Date().getTime(), todo: input.value });
