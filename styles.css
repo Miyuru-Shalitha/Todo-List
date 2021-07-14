@@ -225,3 +225,42 @@ body {
 /* .create-task span {
     color: white;
 } */
+
+.edit-task {
+    flex: 1;
+    height: 30px;
+    border: none;
+    outline: none;
+    text-align: center;
+    border-radius: 10px 0 0 10px;
+    display: flex;
+}
+
+.edit-task > input:first-of-type {
+    flex: 1;
+    height: 30px;
+    border: none;
+    outline: none;
+    text-align: center;
+    border-radius: 10px 0 0 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.edit-task > input:last-of-type {
+    width: 50px;
+    background-color: rgb(0, 93, 200);
+    border: none;
+    border-radius: 0 10px 10px 0;
+    color: white;
+    cursor: pointer;
+    font-family: serif;
+    font-size: 16px;
+}
+
+.edit-task > input:last-of-type:hover {
+    background-color: rgb(80, 134, 196);
+    color: rgb(0, 93, 200);
+}

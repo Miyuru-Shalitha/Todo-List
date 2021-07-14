@@ -288,18 +288,24 @@ function addListTile(listItem) {
     listTile.appendChild(editButton);
     listTile.appendChild(deleteButton);
 
-    deleteButton.onclick = () => {
-        console.log("Delete");
-        deleteTodoFromStorage(
-            deleteButton.parentElement.dataset.key,
-            deleteButton.parentElement.dataset.todoId
-        );
+    const storageKey = listTile.dataset.key;
+    const storageTodoId = listTile.dataset.todoId;
 
-        deleteButton.parentElement.remove();
+    deleteButton.onclick = () => {
+        deleteTodoFromStorage(storageKey, storageTodoId);
+
+        listTile.remove();
     };
 
     editButton.onclick = () => {
-        console.log("Edit button is clicked.");
+        editTodoFromStorage(storageKey, storageTodoId);
+
+        listTile.innerHTML = `
+            <form class="edit-task">
+                <input type="text" value="${listItem.todo}" placeholder="Edit task">
+                <input type="submit" value="Save">
+            </form>
+        `;
     };
 }
 
@@ -324,6 +330,10 @@ function deleteTodoFromStorage(key, todoId) {
 
     // // Update todo list.
     // showTodo();
+}
+
+function editTodoFromStorage() {
+    console.log("Edit button is clicked.");
 }
 
 showCalender(
