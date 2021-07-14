@@ -254,91 +254,90 @@ function showTodo() {
 }
 
 function addListTile(listItem) {
+    let tempNewTodo; // Tempory value for edit form input.
+
     const listTile = document.createElement("div");
     listTile.id = listItem.id;
     listTile.className = "list-tile";
     listTile.dataset.todoId = listItem.id;
     listTile.dataset.key = `${selectedDate}/${selectedMonth}/${selectedYear}`;
 
-    function addListTileContent(todo) {
-        const inputCheckbox = document.createElement("input");
-        inputCheckbox.type = "checkbox";
+    const inputCheckbox = document.createElement("input");
+    inputCheckbox.type = "checkbox";
 
-        const span = document.createElement("span");
-        span.innerText = todo;
+    const span = document.createElement("span");
+    span.innerText = listItem.todo;
 
-        const editButton = document.createElement("div");
-        editButton.className = "button edit";
-        editButton.textContent = "Edit";
+    const editButton = document.createElement("div");
+    editButton.className = "button edit";
+    editButton.textContent = "Edit";
 
-        const deleteButton = document.createElement("div");
-        deleteButton.className = "button delete";
-        deleteButton.textContent = "Delete";
+    const deleteButton = document.createElement("div");
+    deleteButton.className = "button delete";
+    deleteButton.textContent = "Delete";
 
-        document.querySelector(".todo-list").appendChild(listTile);
-        listTile.appendChild(inputCheckbox);
-        listTile.appendChild(span);
-        listTile.appendChild(editButton);
-        listTile.appendChild(deleteButton);
+    document.querySelector(".todo-list").appendChild(listTile);
+    listTile.appendChild(inputCheckbox);
+    listTile.appendChild(span);
+    listTile.appendChild(editButton);
+    listTile.appendChild(deleteButton);
 
-        const storageKey = listTile.dataset.key;
-        const storageTodoId = listTile.dataset.todoId;
+    const storageKey = listTile.dataset.key;
+    const storageTodoId = listTile.dataset.todoId;
 
-        deleteButton.onclick = () => {
-            deleteTodoFromStorage(storageKey, storageTodoId);
+    deleteButton.onclick = () => {
+        deleteTodoFromStorage(storageKey, storageTodoId);
 
-            listTile.remove();
+        listTile.remove();
+    };
+
+    editButton.onclick = () => {
+        const editTaskForm = document.createElement("form");
+        editTaskForm.className = "edit-task";
+
+        // listTile.replaceChildren(editTaskForm);
+        // listTile.replaceChild(editTaskForm);
+        listTile.removeChild(inputCheckbox);
+        listTile.removeChild(span);
+        listTile.removeChild(editButton);
+        listTile.removeChild(deleteButton);
+        listTile.appendChild(editTaskForm);
+
+        const editTaskInput = document.createElement("input");
+        editTaskInput.type = "text";
+        editTaskInput.placeholder = "Edit task";
+        editTaskInput.value = tempNewTodo != null ? tempNewTodo : listItem.todo;
+
+        const editTaskSubmit = document.createElement("input");
+        editTaskSubmit.type = "submit";
+        editTaskSubmit.value = "Save";
+
+        listTile.appendChild(editTaskForm);
+        editTaskForm.appendChild(editTaskInput);
+        editTaskForm.appendChild(editTaskSubmit);
+
+        document.querySelector(".edit-task").onsubmit = (event) => {
+            event.preventDefault();
+
+            const newTodo = event.target[0].value;
+
+            tempNewTodo = newTodo;
+
+            editTodoFromStorage(storageKey, storageTodoId, newTodo)
+                .then(() => {
+                    listTile.removeChild(editTaskForm);
+                    listTile.appendChild(inputCheckbox);
+                    listTile.appendChild(span);
+                    listTile.appendChild(editButton);
+                    listTile.appendChild(deleteButton);
+
+                    span.innerText = newTodo;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         };
-
-        editButton.onclick = () => {
-            const editTaskForm = document.createElement("form");
-            editTaskForm.className = "edit-task";
-
-            // listTile.replaceChildren(editTaskForm);
-            // listTile.replaceChild(editTaskForm);
-            listTile.removeChild(inputCheckbox);
-            listTile.removeChild(span);
-            listTile.removeChild(editButton);
-            listTile.removeChild(deleteButton);
-            listTile.appendChild(editTaskForm);
-
-            const editTaskInput = document.createElement("input");
-            editTaskInput.type = "text";
-            editTaskInput.placeholder = "Edit task";
-            editTaskInput.value = listItem.todo;
-
-            const editTaskSubmit = document.createElement("input");
-            editTaskSubmit.type = "submit";
-            editTaskSubmit.value = "Save";
-
-            listTile.appendChild(editTaskForm);
-            editTaskForm.appendChild(editTaskInput);
-            editTaskForm.appendChild(editTaskSubmit);
-
-            document.querySelector(".edit-task").onsubmit = (event) => {
-                event.preventDefault();
-
-                const newTodo = event.target[0].value;
-
-                editTodoFromStorage(storageKey, storageTodoId, newTodo)
-                    .then(() => {
-                        listTile.removeChild(editTaskForm);
-                        // addListTileContent(newTodo);
-                        listTile.appendChild(inputCheckbox);
-                        listTile.appendChild(span);
-                        listTile.appendChild(editButton);
-                        listTile.appendChild(deleteButton);
-
-                        span.innerText = newTodo;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            };
-        };
-    }
-
-    addListTileContent(listItem.todo);
+    };
 }
 
 function deleteTodoFromStorage(key, todoId) {
