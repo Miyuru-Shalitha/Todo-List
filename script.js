@@ -158,7 +158,7 @@ function showCalender(date, month, year) {
     headerSpan.setAttribute("data-month", month + 1);
     headerSpan.setAttribute("data-year", year);
 
-    showBottomBorders(month, year);
+    showBottomBorders(month + 1, year);
 }
 
 function previousAndNextMonthButtons() {
@@ -168,7 +168,7 @@ function previousAndNextMonthButtons() {
     headerMonth = currentDate.getMonth();
     headerYear = currentDate.getFullYear();
 
-    showBottomBorders(headerMonth, headerYear);
+    // showBottomBorders(headerMonth, headerYear);
 
     document.querySelectorAll(".header > div").forEach((button) => {
         button.onclick = () => {
@@ -183,6 +183,8 @@ function previousAndNextMonthButtons() {
             }
 
             showCalender(date, headerMonth, headerYear);
+
+            showBottomBorders(headerMonth, headerYear);
         };
     });
 }
@@ -263,7 +265,7 @@ function showTodo() {
 }
 
 function addListTile(listItem) {
-    showBottomBorders(headerMonth, headerYear);
+    showBottomBorders(selectedMonth, selectedYear);
 
     let tempNewTodo; // Tempory value for edit form input.
 
@@ -301,7 +303,7 @@ function addListTile(listItem) {
 
         listTile.remove();
 
-        showBottomBorders(headerMonth, headerYear);
+        showBottomBorders(selectedMonth, selectedYear);
     };
 
     editButton.onclick = () => {
@@ -407,20 +409,18 @@ function editTodoFromStorage(key, todoId, newTodo) {
 
 // Add bottom borders corresponding to todo count.
 function showBottomBorders(month, year) {
-    month++;
+    const monthInt = parseInt(month);
+    const yearInt = parseInt(year);
 
     const dayTiles = document.querySelectorAll(
         ".calender-tile:not(.name-of-day)"
     );
 
-    console.log(month, year);
+    console.log(monthInt, yearInt);
 
     dayTiles.forEach((dayTile) => {
-        // console.log(dayTile.dataset.day);
-        // dayTile.classList.add("blue-border-bottom");
-
         const storedTodoListJSON = localStorage.getItem(
-            `${dayTile.dataset.day}/${month}/${year}`
+            `${dayTile.dataset.day}/${monthInt}/${yearInt}`
         );
 
         // Remove previous bottom border styles.
