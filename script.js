@@ -294,7 +294,13 @@ function addListTile(listItem) {
             const editTaskForm = document.createElement("form");
             editTaskForm.className = "edit-task";
 
-            listTile.replaceChildren(editTaskForm);
+            // listTile.replaceChildren(editTaskForm);
+            // listTile.replaceChild(editTaskForm);
+            listTile.removeChild(inputCheckbox);
+            listTile.removeChild(span);
+            listTile.removeChild(editButton);
+            listTile.removeChild(deleteButton);
+            listTile.appendChild(editTaskForm);
 
             const editTaskInput = document.createElement("input");
             editTaskInput.type = "text";
@@ -317,7 +323,13 @@ function addListTile(listItem) {
                 editTodoFromStorage(storageKey, storageTodoId, newTodo)
                     .then(() => {
                         listTile.removeChild(editTaskForm);
-                        addListTileContent(newTodo);
+                        // addListTileContent(newTodo);
+                        listTile.appendChild(inputCheckbox);
+                        listTile.appendChild(span);
+                        listTile.appendChild(editButton);
+                        listTile.appendChild(deleteButton);
+
+                        span.innerText = newTodo;
                     })
                     .catch((error) => {
                         console.log(error);
