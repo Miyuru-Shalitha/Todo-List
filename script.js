@@ -209,6 +209,7 @@ function addTask() {
         if (storedTodoListJSON) {
             const tempTodoList = JSON.parse(storedTodoListJSON);
             tempTodoList.push({
+                id: new Date().getTime(),
                 time: new Date().getTime(),
                 todo: input.value,
             });
@@ -217,6 +218,7 @@ function addTask() {
         } else {
             newTodoList = JSON.stringify([
                 {
+                    id: new Date().getTime(),
                     time: new Date().getTime(),
                     todo: input.value,
                 },
@@ -259,7 +261,10 @@ function addListTile(listItem) {
     // </div>`;
 
     const listTile = document.createElement("div");
+    listTile.id = listItem.id;
     listTile.className = "list-tile";
+    listTile.dataset.todoId = listItem.id;
+    listTile.dataset.key = `${selectedDate}/${selectedMonth}/${selectedYear}`;
 
     const inputCheckbox = document.createElement("input");
     inputCheckbox.type = "checkbox";
@@ -280,6 +285,43 @@ function addListTile(listItem) {
     listTile.appendChild(span);
     listTile.appendChild(editButton);
     listTile.appendChild(deleteButton);
+
+    deleteButton.onclick = () => {
+        console.log("Delete");
+        deleteTodoFromStorage(
+            deleteButton.parentElement.dataset.key,
+            deleteButton.parentElement.dataset.todoId
+        );
+
+        deleteButton.parentElement.remove();
+    };
+
+    editButton.onclick = () => {
+        console.log("Edit button is clicked.");
+    };
+}
+
+function deleteTodoFromStorage(key, todoId) {
+    const storedTodo = JSON.parse(localStorage.getItem(key));
+    for (let i = 0; i < storedTodo.length; i++) {
+        if (storedTodo[i].id == todoId) {
+            storedTodo.splice(i, 1);
+
+            if (storedTodo.length === 0) {
+                // If there are no todos in the list "[]" remove entire item.
+                localStorage.removeItem(key);
+            } else {
+                // Otherwise only update the stored value.
+                const updatedTodoListJSON = JSON.stringify(storedTodo);
+
+                localStorage.setItem(key, updatedTodoListJSON);
+                break;
+            }
+        }
+    }
+
+    // // Update todo list.
+    // showTodo();
 }
 
 showCalender(
