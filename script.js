@@ -254,77 +254,79 @@ function showTodo() {
 }
 
 function addListTile(listItem) {
-    // document.querySelector(".todo-list").innerHTML = `
-    // <div class="list-tile">
-    //     <input type="checkbox">
-    //     <span>Hello, world!</span>
-    //     <div class="button edit">Edit</div>
-    //     <div class="button delete">Delete</div>
-    // </div>`;
-
     const listTile = document.createElement("div");
     listTile.id = listItem.id;
     listTile.className = "list-tile";
     listTile.dataset.todoId = listItem.id;
     listTile.dataset.key = `${selectedDate}/${selectedMonth}/${selectedYear}`;
 
-    const inputCheckbox = document.createElement("input");
-    inputCheckbox.type = "checkbox";
+    function addListTileContent(todo) {
+        const inputCheckbox = document.createElement("input");
+        inputCheckbox.type = "checkbox";
 
-    const span = document.createElement("span");
-    span.innerText = listItem.todo;
+        const span = document.createElement("span");
+        span.innerText = todo;
 
-    const editButton = document.createElement("div");
-    editButton.className = "button edit";
-    editButton.textContent = "Edit";
+        const editButton = document.createElement("div");
+        editButton.className = "button edit";
+        editButton.textContent = "Edit";
 
-    const deleteButton = document.createElement("div");
-    deleteButton.className = "button delete";
-    deleteButton.textContent = "Delete";
+        const deleteButton = document.createElement("div");
+        deleteButton.className = "button delete";
+        deleteButton.textContent = "Delete";
 
-    document.querySelector(".todo-list").appendChild(listTile);
-    listTile.appendChild(inputCheckbox);
-    listTile.appendChild(span);
-    listTile.appendChild(editButton);
-    listTile.appendChild(deleteButton);
+        document.querySelector(".todo-list").appendChild(listTile);
+        listTile.appendChild(inputCheckbox);
+        listTile.appendChild(span);
+        listTile.appendChild(editButton);
+        listTile.appendChild(deleteButton);
 
-    const storageKey = listTile.dataset.key;
-    const storageTodoId = listTile.dataset.todoId;
+        const storageKey = listTile.dataset.key;
+        const storageTodoId = listTile.dataset.todoId;
 
-    deleteButton.onclick = () => {
-        deleteTodoFromStorage(storageKey, storageTodoId);
+        deleteButton.onclick = () => {
+            deleteTodoFromStorage(storageKey, storageTodoId);
 
-        listTile.remove();
-    };
-
-    editButton.onclick = () => {
-        listTile.innerHTML = `
-            <form class="edit-task">
-                <input type="text" value="${listItem.todo}" placeholder="Edit task">
-                <input type="submit" value="Save">
-            </form>
-        `;
-
-        document.querySelector(".edit-task").onsubmit = (event) => {
-            event.preventDefault();
-
-            const newTodo = event.target[0].value;
-
-            editTodoFromStorage(storageKey, storageTodoId, newTodo)
-                .then(() => {
-                    console.log("Yoo");
-                    listTile.innerHTML = `
-                        <input type="checkbox">
-                        <span>${newTodo}</span>
-                        <div class="button edit">Edit</div>
-                        <div class="button delete">Delete</div>
-                    `;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            listTile.remove();
         };
-    };
+
+        editButton.onclick = () => {
+            const editTaskForm = document.createElement("form");
+            editTaskForm.className = "edit-task";
+
+            listTile.replaceChildren(editTaskForm);
+
+            const editTaskInput = document.createElement("input");
+            editTaskInput.type = "text";
+            editTaskInput.placeholder = "Edit task";
+            editTaskInput.value = listItem.todo;
+
+            const editTaskSubmit = document.createElement("input");
+            editTaskSubmit.type = "submit";
+            editTaskSubmit.value = "Save";
+
+            listTile.appendChild(editTaskForm);
+            editTaskForm.appendChild(editTaskInput);
+            editTaskForm.appendChild(editTaskSubmit);
+
+            document.querySelector(".edit-task").onsubmit = (event) => {
+                event.preventDefault();
+
+                const newTodo = event.target[0].value;
+
+                editTodoFromStorage(storageKey, storageTodoId, newTodo)
+                    .then(() => {
+                        listTile.removeChild(editTaskForm);
+                        addListTileContent(newTodo);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            };
+        };
+    }
+
+    addListTileContent(listItem.todo);
 }
 
 function deleteTodoFromStorage(key, todoId) {
