@@ -434,16 +434,38 @@ function showBottomBorders(month, year) {
         dayTile.classList.remove("green-border-bottom");
         dayTile.classList.remove("blue-border-bottom");
 
+        const currentTodoCountSpan = document.querySelector(
+            ".calender-tile:not(.name-of-day) > span"
+        );
+
+        const clearPreviousTodoCountSpan = new Promise((resolve, reject) => {
+            if (currentTodoCountSpan) {
+                currentTodoCountSpan.remove();
+            }
+
+            resolve("Cleaned");
+        });
+
         if (storedTodoListJSON) {
             const storedTodoList = JSON.parse(storedTodoListJSON);
             const todoCount = storedTodoList.length;
 
+            const todoCountSpan = document.createElement("span");
+            todoCountSpan.className = "todo-count";
+            todoCountSpan.textContent = todoCount;
+            clearPreviousTodoCountSpan.then(() => {
+                dayTile.appendChild(todoCountSpan);
+            });
+
             if (todoCount < 4) {
                 dayTile.classList.add("blue-border-bottom");
+                todoCountSpan.style.backgroundColor = "blue";
             } else if (todoCount < 7) {
                 dayTile.classList.add("green-border-bottom");
+                todoCountSpan.style.backgroundColor = "green";
             } else {
                 dayTile.classList.add("red-border-bottom");
+                todoCountSpan.style.backgroundColor = "red";
             }
         }
     });

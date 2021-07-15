@@ -95,6 +95,7 @@ body {
     align-items: center;
     font-size: 36px;
     cursor: pointer;
+    position: relative;
 }
 
 .calender-tile:not(.name-of-day, .current-day):hover {
@@ -275,4 +276,19 @@ body {
 .edit-task > input:last-of-type:hover {
     background-color: rgb(80, 134, 196);
     color: rgb(0, 93, 200);
+}
+
+.todo-count {
+    position: absolute;
+    font-size: 14px;
+    color: white;
+    top: 0;
+    right: 0;
+    /* background-color: blue; */
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
