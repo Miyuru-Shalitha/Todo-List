@@ -175,7 +175,7 @@ function previousAndNextMonthButtons() {
 
     // showBottomBorders(headerMonth, headerYear);
 
-    document.querySelectorAll(".header > div").forEach((button) => {
+    document.querySelectorAll(".header > button").forEach((button) => {
         button.onclick = () => {
             headerMonth += parseInt(button.dataset.monthOffset);
 

@@ -40,20 +40,21 @@ body {
     border-radius: 10px;
 }
 
-.header > div {
+.header > button {
     font-size: 25px;
-    /* background-color: white; */
+    font-family: serif;
+    background-color: transparent;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
 }
 
-.header div:first-of-type {
+.header button:first-of-type {
     color: rgb(2, 175, 2);
     border: 1px solid green;
 }
 
-.header div:first-of-type:hover {
+.header button:first-of-type:hover {
     background-color: rgb(78, 255, 93);
     color: green;
 }
@@ -62,12 +63,12 @@ body {
     font-size: 40px;
 }
 
-.header div:last-of-type {
+.header button:last-of-type {
     color: blue;
     border: 1px solid blue;
 }
 
-.header div:last-of-type:hover {
+.header button:last-of-type:hover {
     background-color: rgb(100, 100, 255);
     color: rgb(0, 0, 105);
 }
