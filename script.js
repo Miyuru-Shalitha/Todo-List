@@ -327,6 +327,7 @@ function addListTile(listItem) {
         editTaskInput.type = "text";
         editTaskInput.placeholder = "Edit task";
         editTaskInput.value = tempNewTodo != null ? tempNewTodo : listItem.todo;
+        editTaskInput.autofocus = "true";
 
         const editTaskSubmit = document.createElement("input");
         editTaskSubmit.type = "submit";
@@ -471,6 +472,34 @@ function showBottomBorders(month, year) {
     });
 }
 
+function archiveButton() {
+    const archiveBtn = document.querySelector(".right-container > button");
+    archiveBtn.onclick = () => {
+        console.log("Archive");
+
+        const todolist = document.querySelector(".todo-list");
+        const addTaskForm = document.querySelector(".right-container > form");
+        const previousArchiveContainer =
+            document.querySelector("#archive-container");
+
+        if (previousArchiveContainer) {
+            previousArchiveContainer.remove();
+            todolist.classList.remove("blur-background");
+            addTaskForm.classList.remove("blur-background");
+        } else {
+            const rightContainer = document.querySelector(".right-container");
+
+            const archiveContainer = document.createElement("div");
+            archiveContainer.id = "archive-container";
+            archiveContainer.className = "archive";
+
+            rightContainer.appendChild(archiveContainer);
+            todolist.classList.add("blur-background");
+            addTaskForm.classList.add("blur-background");
+        }
+    };
+}
+
 showCalender(
     currentDate.getDate(),
     currentDate.getMonth() + 1,
@@ -479,6 +508,7 @@ showCalender(
 previousAndNextMonthButtons();
 selectDayTile();
 addTask();
+archiveButton();
 // localStorage.setItem("name", "Paradox");
 // console.log(localStorage.getItem("name"));
 // localStorage.removeItem("name");

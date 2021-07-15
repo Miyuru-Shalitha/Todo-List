@@ -144,6 +144,35 @@ body {
     background-color: rgb(212, 212, 212);
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.right-container > button {
+    background-color: transparent;
+    z-index: 1;
+}
+
+@keyframes archive-animation {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.archive {
+    background-color: rgba(0, 0, 255, 0.308);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    animation: archive-animation 0.5s ease-out;
+}
+
+.blur-background {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    transition: all 0.5s ease;
 }
 
 .todo-list {
