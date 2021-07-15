@@ -1,4 +1,4 @@
-// 2021 -> July -> 11, 12, 13, 14, 15 -> Sunday, Monday, Tuesday, Wednesday, Thursday // The days this was scripted.
+// 2021 -> July -> 11, 12, 13, 14, 15, 16 -> Sunday, Monday, Tuesday, Wednesday, Thursday, Friday// The days this was scripted.
 
 // 1  -> 31
 // 2  -> 28 / 29
