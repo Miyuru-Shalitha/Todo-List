@@ -182,9 +182,9 @@ function previousAndNextMonthButtons() {
                 headerYear -= 1;
             }
 
-            showCalender(date, headerMonth, headerYear);
+            showCalender(date, headerMonth + 1, headerYear);
 
-            showBottomBorders(headerMonth, headerYear);
+            showBottomBorders(headerMonth + 1, headerYear);
         };
     });
 }
@@ -349,7 +349,8 @@ function addListTile(listItem) {
                     span.innerText = newTodo;
                 })
                 .catch((error) => {
-                    console.log(error);
+                    // console.log(error);
+                    alert(error);
                 });
         };
     };
@@ -379,7 +380,7 @@ function deleteTodoFromStorage(key, todoId) {
 }
 
 function editTodoFromStorage(key, todoId, newTodo) {
-    console.log(key, todoId, newTodo);
+    // console.log(key, todoId, newTodo);
 
     let editSuccess = false;
 
@@ -416,7 +417,7 @@ function showBottomBorders(month, year) {
         ".calender-tile:not(.name-of-day)"
     );
 
-    console.log(monthInt, yearInt);
+    // console.log(monthInt, yearInt);
 
     dayTiles.forEach((dayTile) => {
         const storedTodoListJSON = localStorage.getItem(
