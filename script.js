@@ -20,10 +20,11 @@ let selectedDate;
 let selectedMonth;
 let selectedYear;
 
-let headerMonth; // Month in header.
-let headerYear; // Year in header.
+let headerMonth = currentDate.getMonth(); // Month in header.
+let headerYear = currentDate.getFullYear(); // Year in header.
 
 function numberOfDaysOfMonth(month, year) {
+    month++;
     // Check whether "month" is a valid month or not.
     if (month > 12) {
         alert(`${month} is not a valid month!`);
@@ -111,7 +112,7 @@ function displayDays(dayIndex) {
     }
 
     // Set corresponding day for dayTile.
-    for (let i = 1; i <= numberOfDaysOfMonth(7, 2021); i++) {
+    for (let i = 1; i <= numberOfDaysOfMonth(headerMonth, headerYear); i++) {
         document.querySelector(`#day-tile${dayIndex}`).textContent = i;
         document
             .querySelector(`#day-tile${dayIndex}`)
@@ -144,7 +145,11 @@ function showCalender(date, month, year) {
     document.querySelectorAll(".calender-tile").forEach((dayTile) => {
         const dayTileClassList = dayTile.classList;
 
-        if (month === currentDate.getMonth() && dayTile.dataset.day == date) {
+        if (
+            year === currentDate.getFullYear() &&
+            month === currentDate.getMonth() &&
+            dayTile.dataset.day == date
+        ) {
             // Highlight current day.
             dayTileClassList.add("current-day");
         } else if (dayTileClassList.contains("current-day")) {
@@ -174,11 +179,11 @@ function previousAndNextMonthButtons() {
         button.onclick = () => {
             headerMonth += parseInt(button.dataset.monthOffset);
 
-            if (headerMonth > 12) {
-                headerMonth = 1;
+            if (headerMonth > 11) {
+                headerMonth = 0;
                 headerYear += 1;
-            } else if (headerMonth < 1) {
-                headerMonth = 12;
+            } else if (headerMonth < 0) {
+                headerMonth = 11;
                 headerYear -= 1;
             }
 
