@@ -286,11 +286,11 @@ function addListTile(listItem) {
     const span = document.createElement("span");
     span.innerText = listItem.todo;
 
-    const editButton = document.createElement("div");
+    const editButton = document.createElement("button");
     editButton.className = "button edit";
     editButton.textContent = "Edit";
 
-    const deleteButton = document.createElement("div");
+    const deleteButton = document.createElement("button");
     deleteButton.className = "button delete";
     deleteButton.textContent = "Delete";
 

@@ -174,9 +174,12 @@ body {
 }
 
 .button {
-    padding: 5px;
+    border: none;
+    padding: 7px;
     color: white;
     cursor: pointer;
+    font-family: serif;
+    font-size: 15px;
 }
 
 .edit {
