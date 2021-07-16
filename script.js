@@ -21,7 +21,6 @@ let headerSpan;
 let selectedDate = currentDate.getDate();
 let selectedMonth = currentDate.getMonth() + 1;
 let selectedYear = currentDate.getFullYear();
-let selectedDayTile;
 
 let headerMonth = currentDate.getMonth(); // Month in header.
 let headerYear = currentDate.getFullYear(); // Year in header.
@@ -193,37 +192,43 @@ function previousAndNextMonthButtons() {
             showCalender(date, headerMonth + 1, headerYear);
 
             showBottomBorders(headerMonth + 1, headerYear);
+
+            clearSelectedDayTileColor();
         };
     });
 }
 
 // Add onclick listeners to each dayTile.
 function selectDayTile() {
+    document
+        .querySelectorAll(".calender-tile:not(.name-of-day)")
+        .forEach((dayTile) => {
+            dayTile.onclick = () => {
+                headerSpan = document.querySelector(".header > span");
+                selectedDate = parseInt(dayTile.dataset.day);
+                selectedMonth = parseInt(headerSpan.dataset.month);
+                selectedYear = parseInt(headerSpan.dataset.year);
+
+                clearSelectedDayTileColor();
+
+                dayTile.style.backgroundColor = SELECTED_DAYTILE_COLOR;
+
+                showTodo();
+            };
+        });
+}
+
+function clearSelectedDayTileColor() {
     const dayTiles = document.querySelectorAll(
         ".calender-tile:not(.name-of-day)"
     );
 
-    dayTiles.forEach((dayTile) => {
-        dayTile.onclick = () => {
-            headerSpan = document.querySelector(".header > span");
-            selectedDate = parseInt(dayTile.dataset.day);
-            selectedMonth = parseInt(headerSpan.dataset.month);
-            selectedYear = parseInt(headerSpan.dataset.year);
-
-            for (let i = 0; i < dayTiles.length; i++) {
-                if (
-                    dayTiles[i].style.backgroundColor === SELECTED_DAYTILE_COLOR
-                ) {
-                    dayTiles[i].style.backgroundColor = null;
-                    break;
-                }
-            }
-
-            dayTile.style.backgroundColor = SELECTED_DAYTILE_COLOR;
-
-            showTodo();
-        };
-    });
+    for (let i = 0; i < dayTiles.length; i++) {
+        if (dayTiles[i].style.backgroundColor === SELECTED_DAYTILE_COLOR) {
+            dayTiles[i].style.backgroundColor = null;
+            break;
+        }
+    }
 }
 
 // "Add" button functionality.
