@@ -433,7 +433,7 @@ function editTodoFromStorage(key, todoId, newTodo) {
         if (editSuccess) {
             resolve("Success");
         } else {
-            reject("Falid");
+            reject("Faild");
         }
     });
 }
@@ -499,8 +499,6 @@ function showBottomBorders(month, year) {
 function archiveButton() {
     const archiveBtn = document.querySelector(".right-container > button");
     archiveBtn.onclick = () => {
-        console.log("Archive");
-
         const todolist = document.querySelector(".todo-list");
         const addTaskForm = document.querySelector(".right-container > form");
         const previousArchiveContainer =
@@ -520,8 +518,34 @@ function archiveButton() {
             rightContainer.appendChild(archiveContainer);
             todolist.classList.add("blur-background");
             addTaskForm.classList.add("blur-background");
+
+            addArchiveList(archiveContainer);
         }
     };
+}
+
+function addArchiveList(archiveContainer) {
+    const archiveItems = JSON.parse(localStorage.getItem("archivedItems"));
+
+    archiveItems.forEach((item) => {
+        addArchiveListTile(item, archiveContainer);
+    });
+}
+
+function addArchiveListTile(archiveItem, archiveContainer) {
+    const archiveListTile = document.createElement("div");
+    archiveListTile.className = "archive-list-tile";
+
+    const span = document.createElement("span");
+    span.innerText = archiveItem.todo;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "button";
+    deleteButton.textContent = "Delete";
+
+    archiveListTile.appendChild(span);
+    archiveListTile.appendChild(deleteButton);
+    archiveContainer.appendChild(archiveListTile);
 }
 
 showCalender(

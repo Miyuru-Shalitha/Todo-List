@@ -325,3 +325,28 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.archive-list-tile {
+    background-color: rgb(66, 66, 133);
+    margin: 20px 20px 20px;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.archive-list-tile > span {
+    color: white;
+    font-size: 25px;
+    flex: 1;
+    padding: 0 10px;
+}
+
+.archive-list-tile > button {
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+}
+
+.archive-list-tile > button:hover {
+    background-color: rgb(255, 104, 104);
+}
