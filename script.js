@@ -13,12 +13,15 @@
 // 11 -> 30
 // 12 -> 31
 
+const SELECTED_DAYTILE_COLOR = "rgb(102, 153, 255)";
+
 const currentDate = new Date();
 
 let headerSpan;
-let selectedDate;
-let selectedMonth;
-let selectedYear;
+let selectedDate = currentDate.getDate();
+let selectedMonth = currentDate.getMonth() + 1;
+let selectedYear = currentDate.getFullYear();
+let selectedDayTile;
 
 let headerMonth = currentDate.getMonth(); // Month in header.
 let headerYear = currentDate.getFullYear(); // Year in header.
@@ -196,18 +199,31 @@ function previousAndNextMonthButtons() {
 
 // Add onclick listeners to each dayTile.
 function selectDayTile() {
-    document
-        .querySelectorAll(".calender-tile:not(.name-of-day)")
-        .forEach((dayTile) => {
-            dayTile.onclick = () => {
-                headerSpan = document.querySelector(".header > span");
-                selectedDate = parseInt(dayTile.dataset.day);
-                selectedMonth = parseInt(headerSpan.dataset.month);
-                selectedYear = parseInt(headerSpan.dataset.year);
+    const dayTiles = document.querySelectorAll(
+        ".calender-tile:not(.name-of-day)"
+    );
 
-                showTodo();
-            };
-        });
+    dayTiles.forEach((dayTile) => {
+        dayTile.onclick = () => {
+            headerSpan = document.querySelector(".header > span");
+            selectedDate = parseInt(dayTile.dataset.day);
+            selectedMonth = parseInt(headerSpan.dataset.month);
+            selectedYear = parseInt(headerSpan.dataset.year);
+
+            for (let i = 0; i < dayTiles.length; i++) {
+                if (
+                    dayTiles[i].style.backgroundColor === SELECTED_DAYTILE_COLOR
+                ) {
+                    dayTiles[i].style.backgroundColor = null;
+                    break;
+                }
+            }
+
+            dayTile.style.backgroundColor = SELECTED_DAYTILE_COLOR;
+
+            showTodo();
+        };
+    });
 }
 
 // "Add" button functionality.
@@ -584,6 +600,7 @@ previousAndNextMonthButtons();
 selectDayTile();
 addTask();
 archiveButton();
+showTodo();
 // localStorage.setItem("name", "Paradox");
 // console.log(localStorage.getItem("name"));
 // localStorage.removeItem("name");
