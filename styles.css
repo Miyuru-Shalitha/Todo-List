@@ -152,29 +152,6 @@ body {
     z-index: 1;
 }
 
-@keyframes archive-enter-animation {
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(0%);
-    }
-}
-
-.archive {
-    background-color: rgba(0, 0, 255, 0.308);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    animation: archive-enter-animation 0.5s ease-out;
-}
-
-.blur-background {
-    filter: blur(3px);
-    -webkit-filter: blur(3px);
-    transition: all 0.5s ease;
-}
-
 .todo-list {
     flex: 1;
     /* height: 100%; */
@@ -229,6 +206,55 @@ body {
 .delete:hover {
     background-color: rgb(255, 104, 104);
     color: rgb(255, 0, 0);
+}
+
+@keyframes archive-enter-animation {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.archive {
+    background-color: rgba(0, 0, 255, 0.308);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    animation: archive-enter-animation 0.5s ease-out;
+    overflow-y: scroll;
+}
+
+.blur-background {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    transition: all 0.5s ease;
+}
+
+.archive-list-tile {
+    background-color: rgb(66, 66, 133);
+    margin: 20px 20px 20px;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.archive-list-tile > span {
+    color: white;
+    font-size: 25px;
+    flex: 1;
+    padding: 0 10px;
+}
+
+.archive-list-tile > button {
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+}
+
+.archive-list-tile > button:hover {
+    background-color: rgb(255, 104, 104);
 }
 
 .create-task {
@@ -324,29 +350,4 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.archive-list-tile {
-    background-color: rgb(66, 66, 133);
-    margin: 20px 20px 20px;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.archive-list-tile > span {
-    color: white;
-    font-size: 25px;
-    flex: 1;
-    padding: 0 10px;
-}
-
-.archive-list-tile > button {
-    border-radius: 10px;
-    background-color: rgb(255, 0, 0);
-}
-
-.archive-list-tile > button:hover {
-    background-color: rgb(255, 104, 104);
 }

@@ -527,13 +527,14 @@ function archiveButton() {
 function addArchiveList(archiveContainer) {
     const archiveItems = JSON.parse(localStorage.getItem("archivedItems"));
 
-    archiveItems.forEach((item) => {
-        addArchiveListTile(item, archiveContainer);
+    archiveItems?.forEach((item) => {
+        addArchiveListTile(archiveItems, item, archiveContainer);
     });
 }
 
-function addArchiveListTile(archiveItem, archiveContainer) {
+function addArchiveListTile(archiveItems, archiveItem, archiveContainer) {
     const archiveListTile = document.createElement("div");
+    archiveListTile.id = archiveItem.id;
     archiveListTile.className = "archive-list-tile";
 
     const span = document.createElement("span");
@@ -546,6 +547,32 @@ function addArchiveListTile(archiveItem, archiveContainer) {
     archiveListTile.appendChild(span);
     archiveListTile.appendChild(deleteButton);
     archiveContainer.appendChild(archiveListTile);
+
+    deleteButton.onclick = () => {
+        for (let i = 0; i < archiveItems.length; i++) {
+            if (archiveItems[i].id === archiveItem.id) {
+                archiveItems.splice(i, 1);
+
+                if (archiveItems.length === 0) {
+                    // If there are no archivedItems in the list "[]" remove entire archiveItemList.
+                    localStorage.removeItem("archivedItems");
+                } else {
+                    // Otherwise only update the stored value.
+                    const updatedArchiveItemsJSON =
+                        JSON.stringify(archiveItems);
+
+                    localStorage.setItem(
+                        "archivedItems",
+                        updatedArchiveItemsJSON
+                    );
+                }
+
+                archiveListTile.remove();
+
+                break;
+            }
+        }
+    };
 }
 
 showCalender(
