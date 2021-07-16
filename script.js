@@ -360,13 +360,36 @@ function addListTile(listItem) {
                 });
         };
     };
+
+    inputCheckbox.onclick = () => {
+        // Delete the checked todo and return it".
+        const checkedTodo = deleteTodoFromStorage(storageKey, storageTodoId);
+        checkedTodo["archivedTime"] = new Date().getTime();
+
+        // Store in achivedItems.
+        const archivedItemsJSON = localStorage.getItem("archivedItems");
+        if (archivedItemsJSON) {
+            archivedItems = JSON.parse(archivedItemsJSON);
+            archivedItems.push(checkedTodo);
+            const newArchivedItemsJSON = JSON.stringify(archivedItems);
+            localStorage.setItem("archivedItems", newArchivedItemsJSON);
+        } else {
+            const checkedTodoJSON = JSON.stringify([checkedTodo]);
+            localStorage.setItem("archivedItems", checkedTodoJSON);
+        }
+
+        listTile.remove();
+
+        showBottomBorders(selectedMonth, selectedYear);
+    };
 }
 
 function deleteTodoFromStorage(key, todoId) {
     const storedTodo = JSON.parse(localStorage.getItem(key));
+    let targetTodo;
     for (let i = 0; i < storedTodo.length; i++) {
         if (storedTodo[i].id == todoId) {
-            storedTodo.splice(i, 1);
+            targetTodo = storedTodo.splice(i, 1);
 
             if (storedTodo.length === 0) {
                 // If there are no todos in the list "[]" remove entire item.
@@ -380,6 +403,7 @@ function deleteTodoFromStorage(key, todoId) {
             }
         }
     }
+    return targetTodo[0];
 
     // // Update todo list.
     // showTodo();
