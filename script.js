@@ -520,6 +520,12 @@ function showBottomBorders(month, year) {
 function archiveButton() {
     const archiveBtn = document.querySelector(".right-container > button");
     archiveBtn.onclick = () => {
+        if (archiveBtn.textContent === "Show Archives") {
+            archiveBtn.textContent = "Hide Archives";
+        } else {
+            archiveBtn.textContent = "Show Archives";
+        }
+
         const todolist = document.querySelector(".todo-list");
         const addTaskForm = document.querySelector(".right-container > form");
         const previousArchiveContainer =

@@ -150,6 +150,7 @@ body {
 .right-container > button {
     background-color: transparent;
     z-index: 1;
+    cursor: pointer;
 }
 
 .todo-list {
