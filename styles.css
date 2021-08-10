@@ -9,12 +9,6 @@ body {
     padding: 20px;
 }
 
-/* html,
-body {
-    width: 100%;
-    height: 100%;
-} */
-
 .container {
     height: 100%;
     display: flex;
@@ -87,8 +81,6 @@ body {
 }
 
 .calender-tile {
-    /* height: 100%;
-    width: 100%; */
     background-color: rgb(255, 242, 185);
     border-radius: 10px;
     display: flex;
@@ -115,14 +107,8 @@ body {
     border-bottom: 5px solid blue;
 }
 
-/* .calender-tile:nth-child(5) {
-    background-color: rgb(189, 189, 189);
-} */
-
 .name-of-day {
     background-color: rgb(78, 255, 93);
-    /* justify-content: center;
-    align-items: center; */
     font-size: 28px;
 }
 
@@ -140,7 +126,6 @@ body {
 
 .right-container {
     flex: 1;
-    /* height: 50vh; */
     background-color: rgb(212, 212, 212);
     display: flex;
     flex-direction: column;
@@ -155,8 +140,6 @@ body {
 
 .todo-list {
     flex: 1;
-    /* height: 100%; */
-    /* background-color: rgb(212, 212, 212); */
     overflow-y: scroll;
 }
 
@@ -168,10 +151,6 @@ body {
     display: flex;
     align-items: center;
 }
-
-/* .list-tile > input {
-    cursor: pointer;
-} */
 
 .list-tile > span {
     color: white;
@@ -260,11 +239,8 @@ body {
 }
 
 .create-task {
-    /* background-color: white; */
-    /* flex: 1; */
     margin: 20px;
     display: flex;
-    /* border-radius: 10px; */
 }
 
 .create-task > input:first-of-type {
@@ -281,10 +257,6 @@ body {
     background-color: rgb(36, 218, 0);
     border: none;
     border-radius: 0 10px 10px 0;
-    /* display: flex; */
-    /* justify-self: center; */
-    /* align-items: center; */
-    /* padding-left: 10px; */
     color: white;
     cursor: pointer;
     font-family: serif;
@@ -295,10 +267,6 @@ body {
     background-color: rgb(109, 255, 80);
     color: rgb(36, 218, 0);
 }
-
-/* .create-task span {
-    color: white;
-} */
 
 .edit-task {
     flex: 1;
@@ -345,7 +313,6 @@ body {
     color: white;
     top: 0;
     right: 0;
-    /* background-color: blue; */
     border-radius: 10px;
     width: 20px;
     height: 20px;
