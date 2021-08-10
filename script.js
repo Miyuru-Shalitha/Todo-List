@@ -1,18 +1,3 @@
-// 2021 -> July -> 11, 12, 13, 14, 15, 16 -> Sunday, Monday, Tuesday, Wednesday, Thursday, Friday// The days this was scripted.
-
-// 1  -> 31
-// 2  -> 28 / 29
-// 3  -> 31
-// 4  -> 30
-// 5  -> 31
-// 6  -> 30
-// 7  -> 31
-// 8  -> 31
-// 9  -> 30
-// 10 -> 31
-// 11 -> 30
-// 12 -> 31
-
 const SELECTED_DAYTILE_COLOR = "rgb(102, 153, 255)";
 
 const currentDate = new Date();
@@ -170,12 +155,8 @@ function showCalender(date, month, year) {
 
 function previousAndNextMonthButtons() {
     const date = currentDate.getDate();
-    // let month = currentDate.getMonth(); // January -> 0
-    // let headerYear = currentDate.getFullYear();
     headerMonth = currentDate.getMonth();
     headerYear = currentDate.getFullYear();
-
-    // showBottomBorders(headerMonth, headerYear);
 
     document.querySelectorAll(".header > button").forEach((button) => {
         button.onclick = () => {
@@ -238,9 +219,7 @@ function addTask() {
 
         let input = document.querySelector(".create-task > input");
 
-        // todoList.push({ time: new Date().getTime(), todo: input.value });
         const todoItemKey = `${selectedDate}/${selectedMonth}/${selectedYear}`;
-        // const todoItem = JSON.stringify(tempTodoList);
 
         const storedTodoListJSON = localStorage.getItem(todoItemKey);
         let newTodoList;
@@ -336,8 +315,6 @@ function addListTile(listItem) {
         const editTaskForm = document.createElement("form");
         editTaskForm.className = "edit-task";
 
-        // listTile.replaceChildren(editTaskForm);
-        // listTile.replaceChild(editTaskForm);
         listTile.removeChild(inputCheckbox);
         listTile.removeChild(span);
         listTile.removeChild(editButton);
@@ -376,7 +353,6 @@ function addListTile(listItem) {
                     span.innerText = newTodo;
                 })
                 .catch((error) => {
-                    // console.log(error);
                     alert(error);
                 });
         };
@@ -425,14 +401,9 @@ function deleteTodoFromStorage(key, todoId) {
         }
     }
     return targetTodo[0];
-
-    // // Update todo list.
-    // showTodo();
 }
 
 function editTodoFromStorage(key, todoId, newTodo) {
-    // console.log(key, todoId, newTodo);
-
     let editSuccess = false;
 
     const storedTodo = JSON.parse(localStorage.getItem(key));
@@ -467,8 +438,6 @@ function showBottomBorders(month, year) {
     const dayTiles = document.querySelectorAll(
         ".calender-tile:not(.name-of-day)"
     );
-
-    // console.log(monthInt, yearInt);
 
     dayTiles.forEach((dayTile) => {
         const storedTodoListJSON = localStorage.getItem(
@@ -612,9 +581,3 @@ selectDayTile();
 addTask();
 archiveButton();
 showTodo();
-// localStorage.setItem("name", "Paradox");
-// console.log(localStorage.getItem("name"));
-// localStorage.removeItem("name");
-// console.log(localStorage.getItem("name"));
-
-// document.querySelector(".calender-tile").classList.add("red-border-bottom");
